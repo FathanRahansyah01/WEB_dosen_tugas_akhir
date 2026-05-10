@@ -23,7 +23,6 @@ class DosenController extends Controller
         $low = 0;
         $moderate = 0;
         $high = 0;
-        $highStudents = collect();
 
         foreach ($students as $student) {
             $latestStress = $student->stressResults->sortByDesc('created_at')->first();
@@ -31,16 +30,21 @@ class DosenController extends Controller
                 match ($latestStress->level) {
                     'low' => $low++,
                     'moderate' => $moderate++,
-                    'high' => (function () use (&$high, &$highStudents, $student, $latestStress) {
-                        $high++;
-                        $highStudents->push($student);
-                    })(),
+                    'high' => $high++,
+                    default => null,
                 };
             }
         }
 
+        // Recent follow-ups
+        $recentFollowUps = FollowUp::where('dosen_id', $dosenId)
+            ->with('student')
+            ->latest()
+            ->take(5)
+            ->get();
+
         return view('dosen.dashboard', compact(
-            'totalMahasiswa', 'low', 'moderate', 'high', 'highStudents'
+            'totalMahasiswa', 'low', 'moderate', 'high', 'students', 'recentFollowUps'
         ));
     }
 

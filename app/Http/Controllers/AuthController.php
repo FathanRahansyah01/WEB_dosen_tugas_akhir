@@ -87,4 +87,37 @@ class AuthController extends Controller
 
         return redirect('/login');
     }
+
+    /**
+     * Show forgot password form.
+     */
+    public function showForgotPassword()
+    {
+        return view('auth.forgot-password');
+    }
+
+    /**
+     * Handle simple password reset (direct update).
+     */
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'Email tidak ditemukan.',
+            ])->onlyInput('email');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect('/login')->with('success', 'Kata sandi berhasil diperbarui. Silakan masuk dengan kata sandi baru.');
+    }
 }

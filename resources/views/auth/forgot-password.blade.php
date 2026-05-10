@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Login')
+@section('title', 'Lupa Kata Sandi')
 
 @section('content')
 <div class="auth-container">
@@ -10,30 +10,30 @@
         <div class="auth-hero-overlay"></div>
         <div class="auth-hero-content">
             <h1 class="auth-hero-title">StressMonitor</h1>
-            <p class="auth-hero-subtitle">Sistem Monitoring Stres Mahasiswa</p>
+            <p class="auth-hero-subtitle">Reset kata sandi akun Anda</p>
         </div>
     </div>
 
-    {{-- Right Side - Login Form --}}
+    {{-- Right Side - Forgot Password Form --}}
     <div class="auth-form-section">
         <div class="auth-form-wrapper">
             {{-- Logo --}}
             <div class="auth-logo">
                 <div class="auth-logo-icon">
                     <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
                     </svg>
                 </div>
                 <span class="auth-logo-text">StressMonitor</span>
             </div>
 
             {{-- Heading --}}
-            <h2 class="auth-heading">Selamat Datang Kembali!</h2>
-            <p class="auth-subheading">Masuk ke akun Anda untuk melanjutkan</p>
+            <h2 class="auth-heading">Lupa Kata Sandi?</h2>
+            <p class="auth-subheading">Masukkan email Anda dan kata sandi baru</p>
 
             {{-- Error Messages --}}
             @if($errors->any())
-                <div class="auth-alert auth-alert-error" id="login-error">
+                <div class="auth-alert auth-alert-error" id="forgot-error">
                     @foreach($errors->all() as $error)
                         <p>{{ $error }}</p>
                     @endforeach
@@ -47,7 +47,7 @@
             @endif
 
             {{-- Form --}}
-            <form method="POST" action="/login" id="login-form" class="auth-form">
+            <form method="POST" action="{{ route('password.update') }}" id="forgot-password-form" class="auth-form">
                 @csrf
 
                 <div class="auth-field">
@@ -57,19 +57,19 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                         <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
-                               class="auth-input" placeholder="nama@email.com">
+                               class="auth-input" placeholder="Masukkan email terdaftar">
                     </div>
                 </div>
 
                 <div class="auth-field">
-                    <label for="password" class="auth-label">Kata Sandi</label>
+                    <label for="password" class="auth-label">Kata Sandi Baru</label>
                     <div class="auth-input-wrapper">
                         <svg class="auth-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                         <input type="password" id="password" name="password" required
-                               class="auth-input" placeholder="Masukkan kata sandi">
-                        <button type="button" id="toggle-password" onclick="togglePassword('password')"
+                               class="auth-input" placeholder="Minimal 8 karakter">
+                        <button type="button" onclick="togglePassword('password')"
                                 class="auth-toggle-password">
                             <svg id="eye-closed-password" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
@@ -80,27 +80,41 @@
                             </svg>
                         </button>
                     </div>
+                    <p class="auth-hint">Minimal 8 karakter</p>
                 </div>
 
-                <div class="auth-options">
-                    <label class="auth-remember">
-                        <input type="checkbox" id="remember" name="remember" class="auth-checkbox">
-                        <span>Ingat saya</span>
-                    </label>
-                    <a href="{{ route('password.request') }}" class="auth-forgot-link" id="link-forgot">Lupa Kata Sandi?</a>
+                <div class="auth-field">
+                    <label for="password_confirmation" class="auth-label">Konfirmasi Kata Sandi Baru</label>
+                    <div class="auth-input-wrapper">
+                        <svg class="auth-input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required
+                               class="auth-input" placeholder="Ulangi kata sandi baru">
+                        <button type="button" onclick="togglePassword('password_confirmation')"
+                                class="auth-toggle-password">
+                            <svg id="eye-closed-password_confirmation" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                            </svg>
+                            <svg id="eye-open-password_confirmation" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
-                <button type="submit" id="btn-login" class="auth-btn-primary">
-                    <span>Masuk</span>
+                <button type="submit" id="btn-reset-password" class="auth-btn-primary">
+                    <span>Reset Kata Sandi</span>
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
                 </button>
             </form>
 
             <p class="auth-footer-text">
-                Belum punya akun?
-                <a href="{{ route('register') }}" class="auth-footer-link" id="link-register">Daftar di sini</a>
+                Ingat kata sandi Anda?
+                <a href="{{ route('login') }}" class="auth-footer-link" id="link-back-login">Kembali ke Login</a>
             </p>
         </div>
     </div>
