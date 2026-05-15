@@ -13,11 +13,39 @@ class StressResultController extends Controller
     /**
      * GET /api/stress-results
      * Mengambil semua data stress results dengan informasi mahasiswa.
+     *
+     * Query Parameters (opsional):
+     *   - nama: string (pencarian LIKE berdasarkan nama mahasiswa)
+     *   - tingkat_stres: Low | Moderate | High
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $results = StressResult::with('student')
-            ->latest()
+        $query = StressResult::with('student');
+
+        // Filter berdasarkan nama mahasiswa (LIKE search)
+        if ($request->filled('nama')) {
+            $nama = $request->query('nama');
+            $query->whereHas('student', function ($q) use ($nama) {
+                $q->where('nama', 'LIKE', '%' . $nama . '%');
+            });
+        }
+
+        // Filter berdasarkan tingkat stres
+        if ($request->filled('tingkat_stres')) {
+            $level = strtolower($request->query('tingkat_stres'));
+
+            if (!in_array($level, ['low', 'moderate', 'high'])) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Parameter tingkat_stres tidak valid. Gunakan: Low, Moderate, atau High',
+                    'data' => [],
+                ], 422);
+            }
+
+            $query->where('level', $level);
+        }
+
+        $results = $query->latest()
             ->get()
             ->map(fn ($item) => $this->formatResponse($item));
 
