@@ -14,4 +14,4 @@ use App\Http\Controllers\Api\StressResultController;
 */
 
 Route::apiResource('stress-results', StressResultController::class)
-    ->only(['index', 'store', 'update', 'destroy']);
+    ->only(['index', 'show', 'store', 'update', 'destroy']);

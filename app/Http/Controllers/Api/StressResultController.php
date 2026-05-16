@@ -57,6 +57,29 @@ class StressResultController extends Controller
     }
 
     /**
+     * GET /api/stress-results/{id}
+     * Mengambil 1 data stress result berdasarkan ID.
+     */
+    public function show(string $id): JsonResponse
+    {
+        $result = StressResult::with('student')->find($id);
+
+        if (!$result) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan',
+                'data' => null,
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diambil',
+            'data' => $this->formatResponse($result),
+        ]);
+    }
+
+    /**
      * POST /api/stress-results
      * Menambahkan data stress result baru.
      *
