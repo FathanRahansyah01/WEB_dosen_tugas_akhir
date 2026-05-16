@@ -12,8 +12,27 @@ class Student extends Model
     protected $fillable = [
         'nama',
         'nim',
+        'email',
+        'password',
         'dosen_id',
     ];
+
+    /**
+     * Field yang disembunyikan dari JSON response.
+     */
+    protected $hidden = [
+        'password',
+    ];
+
+    /**
+     * Auto-hash password saat di-set.
+     */
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
 
     /**
      * Get the dosen that supervises this student.

@@ -40,18 +40,18 @@ class DatabaseSeeder extends Seeder
 
         // Create Students for Dosen 1
         $students1 = [
-            ['nama' => 'Budi Santoso', 'nim' => '2021001', 'dosen_id' => $dosen1->id],
-            ['nama' => 'Dewi Lestari', 'nim' => '2021002', 'dosen_id' => $dosen1->id],
-            ['nama' => 'Eko Prasetyo', 'nim' => '2021003', 'dosen_id' => $dosen1->id],
-            ['nama' => 'Fitri Handayani', 'nim' => '2021004', 'dosen_id' => $dosen1->id],
-            ['nama' => 'Galih Permana', 'nim' => '2021005', 'dosen_id' => $dosen1->id],
+            ['nama' => 'Budi Santoso', 'nim' => '2021001', 'email' => 'budi@student.com', 'password' => 'password', 'dosen_id' => $dosen1->id],
+            ['nama' => 'Dewi Lestari', 'nim' => '2021002', 'email' => 'dewi@student.com', 'password' => 'password', 'dosen_id' => $dosen1->id],
+            ['nama' => 'Eko Prasetyo', 'nim' => '2021003', 'email' => 'eko@student.com', 'password' => 'password', 'dosen_id' => $dosen1->id],
+            ['nama' => 'Fitri Handayani', 'nim' => '2021004', 'email' => 'fitri@student.com', 'password' => 'password', 'dosen_id' => $dosen1->id],
+            ['nama' => 'Galih Permana', 'nim' => '2021005', 'email' => 'galih@student.com', 'password' => 'password', 'dosen_id' => $dosen1->id],
         ];
 
         // Create Students for Dosen 2
         $students2 = [
-            ['nama' => 'Hendra Wijaya', 'nim' => '2021006', 'dosen_id' => $dosen2->id],
-            ['nama' => 'Indah Permata', 'nim' => '2021007', 'dosen_id' => $dosen2->id],
-            ['nama' => 'Joko Widodo', 'nim' => '2021008', 'dosen_id' => $dosen2->id],
+            ['nama' => 'Hendra Wijaya', 'nim' => '2021006', 'email' => 'hendra@student.com', 'password' => 'password', 'dosen_id' => $dosen2->id],
+            ['nama' => 'Indah Permata', 'nim' => '2021007', 'email' => 'indah@student.com', 'password' => 'password', 'dosen_id' => $dosen2->id],
+            ['nama' => 'Joko Widodo', 'nim' => '2021008', 'email' => 'joko@student.com', 'password' => 'password', 'dosen_id' => $dosen2->id],
         ];
 
         $allStudentData = array_merge($students1, $students2);
