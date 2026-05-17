@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StressResultController;
 use App\Http\Controllers\Api\AuthMobileController;
+use App\Http\Controllers\Api\FollowUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,6 @@ Route::post('/login', [AuthMobileController::class, 'login']);
 // Stress Results CRUD
 Route::apiResource('stress-results', StressResultController::class)
     ->only(['index', 'show', 'store', 'update', 'destroy']);
+
+// Follow-Ups (Notifikasi Mahasiswa)
+Route::get('/follow-ups', [FollowUpController::class, 'index']);
