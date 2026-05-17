@@ -21,15 +21,28 @@ class AuthMobileController extends Controller
             'nim' => 'required|string|max:50|unique:students,nim',
             'email' => 'required|string|email|max:255|unique:students,email',
             'password' => 'required|string|min:6|confirmed',
-            'dosen_id' => 'required|integer|exists:users,id',
+            'nip_dosen' => 'required|string',
         ]);
+
+        // Cari dosen berdasarkan NIP dan pastikan role = dosen
+        $dosen = \App\Models\User::where('nip', $validated['nip_dosen'])
+            ->where('role', 'dosen')
+            ->first();
+
+        if (!$dosen) {
+            return response()->json([
+                'success' => false,
+                'message' => 'NIP dosen tidak ditemukan',
+                'data' => null,
+            ], 404);
+        }
 
         $student = Student::create([
             'nama' => $validated['nama'],
             'nim' => $validated['nim'],
             'email' => $validated['email'],
-            'password' => $validated['password'], // auto-hashed via model cast
-            'dosen_id' => $validated['dosen_id'],
+            'password' => $validated['password'],
+            'dosen_id' => $dosen->id,
         ]);
 
         return response()->json([

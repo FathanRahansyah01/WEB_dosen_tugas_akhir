@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         // Create Dosen
         $dosen1 = User::create([
             'name' => 'Dr. Ahmad Fauzi',
+            'nip' => '198503012010011001',
             'email' => 'ahmad@stressmonitor.com',
             'password' => Hash::make('password'),
             'role' => 'dosen',
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
 
         $dosen2 = User::create([
             'name' => 'Dr. Siti Nurhaliza',
+            'nip' => '199001152015042002',
             'email' => 'siti@stressmonitor.com',
             'password' => Hash::make('password'),
             'role' => 'dosen',

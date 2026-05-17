@@ -21,6 +21,7 @@
                 <tr>
                     <th class="text-left px-6 py-3 font-medium text-gray-500 uppercase text-xs">No</th>
                     <th class="text-left px-6 py-3 font-medium text-gray-500 uppercase text-xs">Nama</th>
+                    <th class="text-left px-6 py-3 font-medium text-gray-500 uppercase text-xs">NIP</th>
                     <th class="text-left px-6 py-3 font-medium text-gray-500 uppercase text-xs">Email</th>
                     <th class="text-left px-6 py-3 font-medium text-gray-500 uppercase text-xs">Jumlah Mahasiswa</th>
                     <th class="text-left px-6 py-3 font-medium text-gray-500 uppercase text-xs">Aksi</th>
@@ -31,6 +32,7 @@
                 <tr class="hover:bg-gray-50">
                     <td class="px-6 py-4 text-gray-500">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4 font-medium">{{ $d->name }}</td>
+                    <td class="px-6 py-4 font-mono text-gray-600">{{ $d->nip ?? '-' }}</td>
                     <td class="px-6 py-4 text-gray-600">{{ $d->email }}</td>
                     <td class="px-6 py-4"><span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">{{ $d->students_count }} mahasiswa</span></td>
                     <td class="px-6 py-4">
@@ -44,7 +46,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">Belum ada data dosen.</td></tr>
+                <tr><td colspan="6" class="px-6 py-12 text-center text-gray-500">Belum ada data dosen.</td></tr>
                 @endforelse
             </tbody>
         </table>

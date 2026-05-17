@@ -34,7 +34,12 @@
                     <td class="px-6 py-4 text-gray-500">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4 font-mono">{{ $s->nim }}</td>
                     <td class="px-6 py-4 font-medium">{{ $s->nama }}</td>
-                    <td class="px-6 py-4 text-gray-600">{{ $s->dosen->name ?? '-' }}</td>
+                    <td class="px-6 py-4 text-gray-600">
+                        {{ $s->dosen->name ?? '-' }}
+                        @if($s->dosen && $s->dosen->nip)
+                        <span class="block text-xs text-gray-400 font-mono">NIP: {{ $s->dosen->nip }}</span>
+                        @endif
+                    </td>
                     <td class="px-6 py-4">
                         @if($ls)
                         <span class="px-2.5 py-0.5 rounded-full text-xs font-medium {{ $ls->level === 'low' ? 'bg-green-100 text-green-800' : ($ls->level === 'moderate' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800') }}">{{ ucfirst($ls->level) }}</span>

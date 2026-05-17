@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StressResultController;
 use App\Http\Controllers\Api\AuthMobileController;
 use App\Http\Controllers\Api\FollowUpController;
+use App\Http\Controllers\Api\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\Api\FollowUpController;
 // Auth Mobile (Mahasiswa)
 Route::post('/register', [AuthMobileController::class, 'register']);
 Route::post('/login', [AuthMobileController::class, 'login']);
+
+// Master Data
+Route::get('/students', [StudentController::class, 'index']);
 
 // Stress Results CRUD
 Route::apiResource('stress-results', StressResultController::class)
